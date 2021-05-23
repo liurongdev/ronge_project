@@ -3,6 +3,7 @@ package com.ronge.demo.service;
 import com.ronge.demo.model.Article;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleService {
 
@@ -17,4 +18,6 @@ public interface ArticleService {
     void doOrUndoLike(long articleId,String operateType);
 
     List<Article> getRelateArticleList(long articleId,int limitSize);
+
+    Map<String,Object> getUserInfoByArticleId(long articleId);
 }

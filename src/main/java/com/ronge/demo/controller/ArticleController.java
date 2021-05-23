@@ -22,7 +22,6 @@ public class ArticleController {
 
     private final int DEFAULT_RELATE_ARTICLE_SIZE = 20;
 
-
     @Autowired
     private ArticleService articleService;
 
@@ -119,6 +118,22 @@ public class ArticleController {
             map.put(ResponseContants.STATUS, ResponseContants.SUCCESS);
         } catch (Exception e) {
             logger.error("获取相关文章失败:{}", e);
+            map.put(ResponseContants.STATUS, ResponseContants.FAIL);
+            map.put(ResponseContants.MESSAGE, e.getMessage());
+        }
+        return map;
+    }
+
+
+    @GetMapping("/getUserInfoByArticleId")
+    public Object getUserInfoByArticleId(@RequestParam("articleId") long articleId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Map<String,Object> userInfo = articleService.getUserInfoByArticleId(articleId);
+            map.put(ResponseContants.DATA, userInfo);
+            map.put(ResponseContants.STATUS, ResponseContants.SUCCESS);
+        } catch (Exception e) {
+            logger.error("根据文章id获取其相关信息异常:{}", e);
             map.put(ResponseContants.STATUS, ResponseContants.FAIL);
             map.put(ResponseContants.MESSAGE, e.getMessage());
         }

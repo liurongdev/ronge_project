@@ -3,7 +3,9 @@ package com.ronge.demo.dao;
 import com.ronge.demo.model.Article;
 import org.apache.ibatis.annotations.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ArticleDao {
@@ -61,4 +63,13 @@ public interface ArticleDao {
             + " limit #{size}"
             +"</script>")
     List<Article> getRelateArticleList(@Param("id") long articleId,@Param("size") int size);
+
+
+    @Select("<script>"
+            + "select count(*) as articleCounts,sum(like_counts) as likeCounts,sum(comment_counts) as commentCounts "
+            + " from article_info"
+            + " where authorId  in "
+            + " (select authorId from article_info where id = #{id})"
+            + "</script>")
+    Map<String, Object> getUserInfoByArticleId(@Param("id") long articleId);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -64,5 +65,18 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getRelateArticleList(long articleId, int limitSize) {
         List<Article> articleList = articleDao.getRelateArticleList(articleId, limitSize);
         return articleList;
+    }
+
+
+    /**
+     * 根据文章id获取用户相关的统计信息
+     * 发表的文章数据，获赞数目，评论数等。
+     * @param articleId
+     * @return
+     */
+    @Override
+    public Map<String, Object> getUserInfoByArticleId(long articleId) {
+        Map<String, Object> res = articleDao.getUserInfoByArticleId(articleId);
+        return res;
     }
 }

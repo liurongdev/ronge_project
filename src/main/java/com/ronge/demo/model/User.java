@@ -14,6 +14,8 @@ public class User {
 
     private String passWord;
 
+    private String headImageUrl;
+
     private Date createDate;
 
     private Date updateDate;
@@ -24,6 +26,7 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
+                ", headImageUrl='" + headImageUrl + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';
