@@ -3,7 +3,6 @@ package com.ronge.demo.dao;
 import com.ronge.demo.model.Article;
 import org.apache.ibatis.annotations.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

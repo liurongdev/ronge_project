@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +58,9 @@ public class CommentController {
 
 
     @GetMapping("/getItemsByArticleId")
-    public Object getItemsByArticleId(@RequestParam("articleId") long articleId){
+    public Object getItemsByArticleId(@RequestParam("articleId") long articleId,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response){
         Map<String, Object> map = new HashMap<>();
         try {
             map.put(ResponseContants.DATA, commentService.getItemsByArticleId(articleId));

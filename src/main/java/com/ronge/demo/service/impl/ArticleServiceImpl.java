@@ -3,6 +3,7 @@ package com.ronge.demo.service.impl;
 import com.ronge.demo.dao.ArticleDao;
 import com.ronge.demo.model.Article;
 import com.ronge.demo.service.ArticleService;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> getItemsByCategory(String label, String subLabel,String orderKey) {
-        return articleDao.getItemsByCategory(label,subLabel,orderKey);
+        List<Article> articleList = articleDao.getItemsByCategory(label,subLabel,orderKey);
+        handle(articleList);
+        return articleList;
     }
 
     @Override
@@ -67,7 +70,6 @@ public class ArticleServiceImpl implements ArticleService {
         return articleList;
     }
 
-
     /**
      * 根据文章id获取用户相关的统计信息
      * 发表的文章数据，获赞数目，评论数等。
@@ -78,5 +80,29 @@ public class ArticleServiceImpl implements ArticleService {
     public Map<String, Object> getUserInfoByArticleId(long articleId) {
         Map<String, Object> res = articleDao.getUserInfoByArticleId(articleId);
         return res;
+    }
+
+
+
+    public void handle(List<Article> articles){
+        if(CollectionUtils.isEmpty(articles)){
+            return;
+        }
+        for(Article article:articles){
+            long now = System.currentTimeMillis();
+            long distanceMills = now-article.getCreateTime().getTime();
+            long milli = 1000;
+            String res;
+            if (distanceMills <= milli * 60) {
+                res = "刚刚";
+            } else if (distanceMills < milli * 60 * 60) {  //分钟级别
+                res = distanceMills / (milli * 60) + "分钟前";
+            } else if (distanceMills < milli * 60 * 60 * 24) {
+                res = distanceMills / (milli * 60 * 60) + "小时前";
+            } else {
+                res = distanceMills / (milli * 60 * 60 * 24) + "天前";
+            }
+            article.setAliasCreateTime(res);
+        }
     }
 }

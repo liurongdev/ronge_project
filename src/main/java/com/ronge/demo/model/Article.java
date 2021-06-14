@@ -65,4 +65,12 @@ public class Article {
      */
     private Date updateTime;
 
+    /**
+     *  文章发表时间
+     *  1、刚刚
+     *  2、几分钟前
+     *  3、几小时前
+     */
+    private String aliasCreateTime;
+
 }
