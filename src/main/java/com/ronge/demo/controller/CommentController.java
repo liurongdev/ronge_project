@@ -18,7 +18,7 @@ import java.util.Map;
  * @author liurong
  * @date 2020/10/4 19:58
  */
-@RequestMapping(value="/rest/v1/comment")
+@RequestMapping(value = "/rest/v1/comment")
 @RestController
 public class CommentController {
 
@@ -28,30 +28,30 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/add")
-    public Object insertComment(@RequestBody String commentString){
+    public Object insertComment(@RequestBody String commentString) {
         Map<String, Object> map = new HashMap<>();
         try {
-            Comment comment= (Comment) JackSonUtils.convertStringToObject(commentString,Comment.class);
+            Comment comment = (Comment) JackSonUtils.convertStringToObject(commentString, Comment.class);
             commentService.addComment(comment);
             map.put(ResponseContants.STATUS, ResponseContants.SUCCESS);
         } catch (Exception e) {
-            logger.error("添加评论异常:{}",e);
-            map.put(ResponseContants.STATUS,ResponseContants.FAIL);
-            map.put(ResponseContants.MESSAGE,e.getMessage());
+            logger.error("添加评论异常:{}", e);
+            map.put(ResponseContants.STATUS, ResponseContants.FAIL);
+            map.put(ResponseContants.MESSAGE, e.getMessage());
         }
         return map;
     }
 
     @DeleteMapping("/delete/{id}")
-    public Object deleteCommentById(@PathVariable("id") int id){
+    public Object deleteCommentById(@PathVariable("id") int id) {
         Map<String, Object> map = new HashMap<>();
         try {
             commentService.deleteCommentById(id);
             map.put(ResponseContants.STATUS, ResponseContants.SUCCESS);
         } catch (Exception e) {
-            logger.error("删除评论异常:{}",e);
-            map.put(ResponseContants.STATUS,ResponseContants.FAIL);
-            map.put(ResponseContants.MESSAGE,e.getMessage());
+            logger.error("删除评论异常:{}", e);
+            map.put(ResponseContants.STATUS, ResponseContants.FAIL);
+            map.put(ResponseContants.MESSAGE, e.getMessage());
         }
         return map;
     }
@@ -60,7 +60,7 @@ public class CommentController {
     @GetMapping("/getItemsByArticleId")
     public Object getItemsByArticleId(@RequestParam("articleId") long articleId,
                                       HttpServletRequest request,
-                                      HttpServletResponse response){
+                                      HttpServletResponse response) {
         Map<String, Object> map = new HashMap<>();
         try {
             map.put(ResponseContants.DATA, commentService.getItemsByArticleId(articleId));
@@ -75,7 +75,7 @@ public class CommentController {
 
 
     @PostMapping("/doAction")
-    public Object getItemsByArticleId(@RequestBody String param){
+    public Object getItemsByArticleId(@RequestBody String param) {
         Map<String, Object> map = new HashMap<>();
         try {
             Map<String, Object> paramMap = (Map<String, Object>) JackSonUtils.convertStringToObject(param, Map.class);
@@ -90,9 +90,4 @@ public class CommentController {
         }
         return map;
     }
-
-
-
-
-
 }

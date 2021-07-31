@@ -20,7 +20,9 @@ public interface ArticleDao {
 
 
     @Select("<script>"
-            +"select * from article_info where authorId = #{userId}"
+            +"select id,title,content,createTime,updateTime,"
+            + "label,sub_label as subLabel,authorId,like_counts as likeCounts ,comment_counts as commentCounts "
+            + "from article_info where authorId = #{userId}"
             +"</script>")
     List<Article> getItemsByUserId(long userId);
 
@@ -55,7 +57,8 @@ public interface ArticleDao {
 
 
     @Select("<script>"
-            +"select id,title,content,createTime,updateTime,label,sub_label,authorId,like_counts,comment_counts, "
+            +"select id,title,content,createTime,updateTime,label,sub_label as subLabel,authorId,"
+            + "like_counts as likeCounts,comment_counts as commentCounts, "
             + "(60*like_counts + 40*comment_counts)/100 as heatIndex "
             + " from article_info where id != #{id}  "
             + " order by heatIndex desc ,updateTime desc"

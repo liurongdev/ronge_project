@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -38,12 +35,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getItemById(long id) {
-        return articleDao.getItemById(id);
+        Article article = articleDao.getItemById(id);
+        handle(article);
+        return article;
     }
 
     @Override
     public List<Article> getItemsByUserId(long userId) {
-        return articleDao.getItemsByUserId(userId);
+        List<Article> articleList = articleDao.getItemsByUserId(userId);
+        handle(articleList);
+        return articleList;
     }
 
     @Override
@@ -67,6 +68,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getRelateArticleList(long articleId, int limitSize) {
         List<Article> articleList = articleDao.getRelateArticleList(articleId, limitSize);
+        handle(articleList);
         return articleList;
     }
 
@@ -104,5 +106,11 @@ public class ArticleServiceImpl implements ArticleService {
             }
             article.setAliasCreateTime(res);
         }
+    }
+
+    public void handle(Article articles){
+        List<Article> articleList= new ArrayList<>();
+        articleList.add(articles);
+        handle(articleList);
     }
 }

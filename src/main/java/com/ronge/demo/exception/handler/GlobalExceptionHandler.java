@@ -1,4 +1,4 @@
-package com.ronge.demo.handler;
+package com.ronge.demo.exception.handler;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

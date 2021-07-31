@@ -2,16 +2,11 @@ package com.ronge.demo.content;
 
 import lombok.Data;
 
-import java.util.List;
 
 @Data
-public class ResponseData<T> {
-
+public class ResData<T> {
 
     private int code;
     private String message;
-    private List<T> data;
-
-
-
+    private T data;
 }
